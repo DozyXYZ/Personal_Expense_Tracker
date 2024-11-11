@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.haagahelia.pet.domain.Expense;
 import fi.haagahelia.pet.domain.ExpenseRepository;
+import fi.haagahelia.pet.domain.TypeExpenseRepository;
 
 @Controller
 public class ExpenseController {

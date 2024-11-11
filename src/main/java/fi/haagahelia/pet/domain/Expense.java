@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Expense {
@@ -13,16 +15,19 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDate date;
-    private String type;
     private String description;
     private double amount;
+
+    @ManyToOne
+    @JoinColumn(name = "type")
+    private TypeExpense typeExpense;
 
     public Expense() {
     }
 
-    public Expense(LocalDate date, String type, String description, double amount) {
+    public Expense(LocalDate date, TypeExpense typeExpense, String description, double amount) {
         this.date = date;
-        this.type = type;
+        this.typeExpense = typeExpense;
         this.description = description;
         this.amount = amount;
     }
@@ -43,14 +48,6 @@ public class Expense {
         this.date = date;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -67,9 +64,12 @@ public class Expense {
         this.amount = amount;
     }
 
-    @Override
-    public String toString() {
-        return "Expense [id=" + id + ", date=" + date + ", type=" + type + ", description=" + description + ", amount="
-                + amount + "]";
+    public TypeExpense getTypeExpense() {
+        return typeExpense;
     }
+
+    public void setTypeExpense(TypeExpense typeExpense) {
+        this.typeExpense = typeExpense;
+    }
+
 }
