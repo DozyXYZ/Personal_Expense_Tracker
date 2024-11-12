@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.haagahelia.pet.domain.Expense;
@@ -33,6 +34,13 @@ public class ExpenseController {
         model.addAttribute("username", username);
         model.addAttribute("expenses", expenseService.getExpensesForUser(username));
         return "expenses";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteExpense(@PathVariable("id") Long expenseId, Principal principal) {
+        String username = principal.getName();
+        expenseService.deleteExpenseForUser(expenseId, username);
+        return "redirect:/expenses";
     }
 
     @GetMapping("/addExpense")

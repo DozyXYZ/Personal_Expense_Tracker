@@ -31,4 +31,11 @@ public class ExpenseService {
         repository.save(expense);
     }
 
+    public void deleteExpenseForUser(Long expenseId, String username) {
+        AppUser user = userRepository.findByUsername(username);
+        Expense expense = repository.findById(expenseId).orElse(null);
+        if (expense != null && expense.getUser().equals(user)) {
+            repository.delete(expense);
+        }
+    }
 }
