@@ -16,7 +16,12 @@ public class ExpenseController {
     @Autowired
     private ExpenseRepository repository;
 
-    @GetMapping(value = { "/", "/expenses" })
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping({ "/", "/expenses" })
     public String expenseList(Model model) {
         model.addAttribute("expenses", repository.findAll());
         return "expenses";

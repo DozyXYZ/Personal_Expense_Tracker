@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fi.haagahelia.pet.domain.AppUser;
+import fi.haagahelia.pet.domain.AppUserRepository;
 import fi.haagahelia.pet.domain.Expense;
 import fi.haagahelia.pet.domain.ExpenseRepository;
 import fi.haagahelia.pet.domain.TypeExpense;
@@ -25,7 +27,8 @@ public class PetApplication {
 	}
 
 	@Bean
-	public CommandLineRunner expenseDemo(ExpenseRepository repository, TypeExpenseRepository typeRepository) {
+	public CommandLineRunner expenseDemo(ExpenseRepository repository, TypeExpenseRepository typeRepository,
+			AppUserRepository userRepository) {
 		return (args) -> {
 			log.info("save a couple of expenses types");
 			TypeExpense housing = new TypeExpense("Housing");
@@ -53,6 +56,18 @@ public class PetApplication {
 			typeRepository.save(clothing);
 			typeRepository.save(giftsAndDonations);
 			typeRepository.save(childcare);
+
+			// Create users: admin/1234 user1/123 user2/111
+			AppUser user1 = new AppUser("user1", "$2a$12$/RIRTZXpf7iOQQE9YQriuO3bqoQ6VNmetairJjw7lfo6EAVHvg0KS", "USER",
+					"user1@email.fi");
+			AppUser user2 = new AppUser("user2", "$2a$12$KRZIYwVAlwj.WTvuH1j6JePubrwlWy8bnI7aVVPiWpVLz4Ayu8Sp6", "USER",
+					"user2@email.fi");
+			AppUser user3 = new AppUser("admin", "$2a$12$B.4rPzaUrVPA2oYrIqzjPOnl0T5U2kvJK74wzj51Kd7zgzyMlPDp6",
+					"ADMIN", "admin@email.fi");
+
+			userRepository.save(user1);
+			userRepository.save(user2);
+			userRepository.save(user3);
 
 			log.info("save a couple of expenses");
 			// January expenses
@@ -87,6 +102,10 @@ public class PetApplication {
 			for (Expense expense : repository.findAll()) {
 				log.info(expense.toString());
 			}
+
+			log.info(user1.getRole());
+			log.info(user2.getRole());
+			log.info(user3.getRole());
 
 		};
 	}
