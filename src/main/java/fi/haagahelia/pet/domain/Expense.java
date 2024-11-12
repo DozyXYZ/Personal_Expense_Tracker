@@ -22,14 +22,19 @@ public class Expense {
     @JoinColumn(name = "type")
     private TypeExpense typeExpense;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AppUser user;
+
     public Expense() {
     }
 
-    public Expense(LocalDate date, TypeExpense typeExpense, String description, double amount) {
+    public Expense(LocalDate date, TypeExpense typeExpense, String description, double amount, AppUser user) {
         this.date = date;
         this.typeExpense = typeExpense;
         this.description = description;
         this.amount = amount;
+        this.user = user;
     }
 
     public Long getId() {
@@ -70,6 +75,14 @@ public class Expense {
 
     public void setTypeExpense(TypeExpense typeExpense) {
         this.typeExpense = typeExpense;
+    }
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 
 }

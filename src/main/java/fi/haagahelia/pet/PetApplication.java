@@ -71,32 +71,31 @@ public class PetApplication {
 
 			log.info("save a couple of expenses");
 			// January expenses
-			repository.save(new Expense(LocalDate.of(2024, 1, 1), housing, "Rent", 1000));
-			repository.save(new Expense(LocalDate.of(2024, 1, 5), utilities, "Electricity Bill", 150));
-			repository.save(new Expense(LocalDate.of(2024, 1, 10), groceries, "Grocery Store", 200));
-			repository.save(new Expense(LocalDate.of(2024, 1, 15), transportation, "Gas", 50));
-			repository.save(new Expense(LocalDate.of(2024, 1, 20), healthcare, "Prescription", 30));
-			repository.save(new Expense(LocalDate.of(2024, 1, 25), insurance, "Car Insurance", 100));
-			repository.save(new Expense(LocalDate.of(2024, 1, 28), debtPayments, "Credit Card Payment", 300));
-			repository.save(new Expense(LocalDate.of(2024, 1, 5), entertainment, "Movie Tickets", 25));
-			repository.save(new Expense(LocalDate.of(2024, 1, 12), education, "Online Course", 50));
-			repository.save(new Expense(LocalDate.of(2024, 1, 18), clothing, "New Shoes", 80));
-			repository.save(new Expense(LocalDate.of(2024, 1, 22), giftsAndDonations, "Charity Donation", 40));
-			repository.save(new Expense(LocalDate.of(2024, 1, 29), childcare, "Daycare", 300));
+			repository.save(new Expense(LocalDate.of(2024, 1, 1), housing, "Rent", 1000, user1));
+			repository.save(new Expense(LocalDate.of(2024, 1, 5), utilities, "Electricity Bill", 150, user1));
+			repository.save(new Expense(LocalDate.of(2024, 1, 10), groceries, "Grocery Store", 200, user1));
+			repository.save(new Expense(LocalDate.of(2024, 1, 15), transportation, "Gas", 50, user1));
+			repository.save(new Expense(LocalDate.of(2024, 1, 20), healthcare, "Prescription", 30, user1));
+			repository.save(new Expense(LocalDate.of(2024, 1, 25), insurance, "Car Insurance", 100, user1));
+			repository.save(new Expense(LocalDate.of(2024, 1, 28), debtPayments, "Credit Card Payment", 300, user1));
+			repository.save(new Expense(LocalDate.of(2024, 1, 5), entertainment, "Movie Tickets", 25, user2));
+			repository.save(new Expense(LocalDate.of(2024, 1, 12), education, "Online Course", 50, user2));
+			repository.save(new Expense(LocalDate.of(2024, 1, 18), clothing, "New Shoes", 80, user2));
+			repository.save(new Expense(LocalDate.of(2024, 1, 22), giftsAndDonations, "Charity Donation", 40, user2));
+			repository.save(new Expense(LocalDate.of(2024, 1, 29), childcare, "Daycare", 300, user2));
 
 			// February expenses
-			repository.save(new Expense(LocalDate.of(2024, 2, 1), housing, "Rent", 1000));
-			repository.save(new Expense(LocalDate.of(2024, 2, 5), utilities, "Electricity Bill", 140));
-			repository.save(new Expense(LocalDate.of(2024, 2, 10), groceries, "Grocery Store", 210));
-			repository.save(new Expense(LocalDate.of(2024, 2, 15), transportation, "Gas", 55));
-			repository.save(new Expense(LocalDate.of(2024, 2, 18), healthcare, "Doctor Visit", 100));
-			repository.save(new Expense(LocalDate.of(2024, 2, 20), insurance, "Health Insurance", 120));
-			repository.save(new Expense(LocalDate.of(2024, 2, 25), debtPayments, "Student Loan Payment", 400));
-			repository.save(new Expense(LocalDate.of(2024, 2, 6), entertainment, "Concert Tickets", 60));
-			repository.save(new Expense(LocalDate.of(2024, 2, 10), education, "Workshop Fee", 75));
-			repository.save(new Expense(LocalDate.of(2024, 2, 15), clothing, "Winter Jacket", 90));
-			repository.save(new Expense(LocalDate.of(2024, 2, 20), giftsAndDonations, "Birthday Gift", 50));
-			repository.save(new Expense(LocalDate.of(2024, 2, 28), childcare, "Daycare", 300));
+			repository.save(new Expense(LocalDate.of(2024, 2, 1), housing, "Rent", 1000, user1));
+			repository.save(new Expense(LocalDate.of(2024, 2, 5), utilities, "Electricity Bill", 140, user1));
+			repository.save(new Expense(LocalDate.of(2024, 2, 10), groceries, "Grocery Store", 210, user1));
+			repository.save(new Expense(LocalDate.of(2024, 2, 15), transportation, "Gas", 55, user1));
+			repository.save(new Expense(LocalDate.of(2024, 2, 18), healthcare, "Doctor Visit", 100, user1));
+			repository.save(new Expense(LocalDate.of(2024, 2, 20), insurance, "Health Insurance", 120, user1));
+			repository.save(new Expense(LocalDate.of(2024, 2, 25), debtPayments, "Student Loan Payment", 400, user1));
+			repository.save(new Expense(LocalDate.of(2024, 2, 6), entertainment, "Concert Tickets", 60, user2));
+			repository.save(new Expense(LocalDate.of(2024, 2, 10), education, "Workshop Fee", 75, user2));
+			repository.save(new Expense(LocalDate.of(2024, 2, 15), clothing, "Winter Jacket", 90, user2));
+			repository.save(new Expense(LocalDate.of(2024, 2, 20), giftsAndDonations, "Birthday Gift", 50, user2));
 
 			log.info("fetch all expenses");
 			for (Expense expense : repository.findAll()) {

@@ -10,4 +10,6 @@ public interface ExpenseRepository extends CrudRepository<Expense, Long> {
     List<Expense> findByAmount(double amount);
 
     List<Expense> findByDescription(String description);
+
+    List<Expense> findByUser(AppUser user);
 }
