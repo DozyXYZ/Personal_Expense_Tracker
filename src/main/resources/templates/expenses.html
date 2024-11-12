@@ -33,11 +33,14 @@
                 <td>
                     <a th:href="@{/delete/{id}(id=${e.id})}" class="btn btn-danger" role="button">Delete</a>
                 </td>
+                <td>
+                    <a th:href="@{/edit/{id}(id=${e.id})}" class="btn btn-primary" role="button">Edit</a>
+                </td>
             </tr>
         </tbody>
     </table>
     <div>
-        <a href="/addExpense">Add Expense</a>
+        <a href="/expenseform">Add Expense</a>
     </div>
 </body>
 

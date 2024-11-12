@@ -44,16 +44,26 @@ public class ExpenseController {
     }
 
     @GetMapping("/addExpense")
-    public String showForm(Model model) {
+    public String showAddForm(Model model) {
         model.addAttribute("expense", new Expense());
         model.addAttribute("typeExpenses", typeRepository.findAll());
-        return "addExpense";
+        return "expenseform";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long expenseId, Principal principal, Model model) {
+        String username = principal.getName();
+        Expense expense = expenseService.getExpensesForUser(username).stream().filter(e -> e.getId().equals(expenseId))
+                .findFirst().orElse(null);
+        model.addAttribute("expense", expense);
+        model.addAttribute("typeExpenses", typeRepository.findAll());
+        return "expenseform";
     }
 
     @PostMapping("/save")
     public String save(Expense expense, Principal principal) {
         String username = principal.getName();
-        expenseService.addExpenseForUser(expense, username);
+        expenseService.saveExpenseForUser(expense, username);
         return "redirect:/expenses";
     }
 

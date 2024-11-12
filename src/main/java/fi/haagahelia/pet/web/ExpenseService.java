@@ -25,7 +25,7 @@ public class ExpenseService {
         return repository.findByUser(userRepository.findByUsername(username));
     }
 
-    public void addExpenseForUser(Expense expense, String username) {
+    public void saveExpenseForUser(Expense expense, String username) {
         AppUser user = userRepository.findByUsername(username);
         expense.setUser(user);
         repository.save(expense);
