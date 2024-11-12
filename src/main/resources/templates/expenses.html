@@ -7,6 +7,10 @@
 </head>
 
 <body>
+    <div>
+        <p>Hello, <span th:text="${username}"></span>!</p>
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -25,6 +29,9 @@
             </tr>
         </tbody>
     </table>
+    <div>
+        <a href="/addExpense">Add Expense</a>
+    </div>
 </body>
 
 </html>

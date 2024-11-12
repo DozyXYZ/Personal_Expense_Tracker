@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fi.haagahelia.pet.domain.AppUser;
 import fi.haagahelia.pet.domain.AppUserRepository;
 import fi.haagahelia.pet.domain.Expense;
 import fi.haagahelia.pet.domain.ExpenseRepository;
@@ -22,6 +23,12 @@ public class ExpenseService {
 
     public List<Expense> getExpensesForUser(String username) {
         return repository.findByUser(userRepository.findByUsername(username));
+    }
+
+    public void addExpenseForUser(Expense expense, String username) {
+        AppUser user = userRepository.findByUsername(username);
+        expense.setUser(user);
+        repository.save(expense);
     }
 
 }
