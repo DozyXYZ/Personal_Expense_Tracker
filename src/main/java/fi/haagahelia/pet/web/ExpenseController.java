@@ -6,15 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.haagahelia.pet.domain.Expense;
 import fi.haagahelia.pet.domain.TypeExpenseRepository;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ExpenseController {
+
+    @Autowired
+    private UserCreationService creationService;
 
     @Autowired
     private ExpenseService expenseService;
@@ -25,6 +28,11 @@ public class ExpenseController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/register")
+    public String showRegistrationForm() {
+        return "register";
     }
 
     // Principal is used to get the username of the currently logged in user
@@ -45,6 +53,7 @@ public class ExpenseController {
 
     @GetMapping("/addExpense")
     public String showAddForm(Model model) {
+        System.out.println("Accessing /addExpense");
         model.addAttribute("expense", new Expense());
         model.addAttribute("typeExpenses", typeRepository.findAll());
         return "expenseform";
@@ -65,6 +74,12 @@ public class ExpenseController {
         String username = principal.getName();
         expenseService.saveExpenseForUser(expense, username);
         return "redirect:/expenses";
+    }
+
+    @PostMapping("/createUser")
+    public String createUser(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
+        creationService.createUser(username, password, email);
+        return "redirect:/login";
     }
 
 }

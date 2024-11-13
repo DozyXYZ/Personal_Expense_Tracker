@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import fi.haagahelia.pet.domain.AppUser;
 import fi.haagahelia.pet.domain.AppUserRepository;
 
-// Authenticate and authorize users with Spring Security
+// authenticate, and authorize users with Spring Security
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
