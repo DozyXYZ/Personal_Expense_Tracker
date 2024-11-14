@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fi.haagahelia.pet.domain.AppUser;
+import fi.haagahelia.pet.domain.AppUserRepository;
 import fi.haagahelia.pet.domain.Expense;
 import fi.haagahelia.pet.domain.TypeExpenseRepository;
 
@@ -25,6 +27,9 @@ public class ExpenseController {
     @Autowired
     private TypeExpenseRepository typeRepository;
 
+    @Autowired
+    private AppUserRepository userRepository;
+
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -39,7 +44,10 @@ public class ExpenseController {
     @GetMapping({ "/", "/expenses" })
     public String expenseList(Model model, Principal principal) {
         String username = principal.getName();
+        AppUser user = userRepository.findByUsername(username);
+        String recoveryCode = user.getRecoveryCode();
         model.addAttribute("username", username);
+        model.addAttribute("recoveryCode", recoveryCode);
         model.addAttribute("expenses", expenseService.getExpensesForUser(username));
         return "expenses";
     }
@@ -53,7 +61,6 @@ public class ExpenseController {
 
     @GetMapping("/addExpense")
     public String showAddForm(Model model) {
-        System.out.println("Accessing /addExpense");
         model.addAttribute("expense", new Expense());
         model.addAttribute("typeExpenses", typeRepository.findAll());
         return "expenseform";

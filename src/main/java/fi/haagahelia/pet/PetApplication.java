@@ -59,11 +59,11 @@ public class PetApplication {
 
 			// Create users: admin/1234 user1/123 user2/111
 			AppUser user1 = new AppUser("user1", "$2a$12$/RIRTZXpf7iOQQE9YQriuO3bqoQ6VNmetairJjw7lfo6EAVHvg0KS", "USER",
-					"user1@email.fi");
+					"user1@email.fi", "A123456");
 			AppUser user2 = new AppUser("user2", "$2a$12$KRZIYwVAlwj.WTvuH1j6JePubrwlWy8bnI7aVVPiWpVLz4Ayu8Sp6", "USER",
-					"user2@email.fi");
+					"user2@email.fi", "B123456");
 			AppUser user3 = new AppUser("admin", "$2a$12$B.4rPzaUrVPA2oYrIqzjPOnl0T5U2kvJK74wzj51Kd7zgzyMlPDp6",
-					"ADMIN", "admin@email.fi");
+					"ADMIN", "admin@email.fi", "C123456");
 
 			userRepository.save(user1);
 			userRepository.save(user2);

@@ -26,14 +26,18 @@ public class AppUser {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "recoveryCode", nullable = false)
+    private String recoveryCode;
+
     public AppUser() {
     }
 
-    public AppUser(String username, String passwordHash, String role, String email) {
+    public AppUser(String username, String passwordHash, String role, String email, String recoveryCode) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
         this.email = email;
+        this.recoveryCode = recoveryCode;
     }
 
     public Long getId() {
@@ -75,4 +79,13 @@ public class AppUser {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getRecoveryCode() {
+        return recoveryCode;
+    }
+
+    public void setRecoveryCode(String recoveryCode) {
+        this.recoveryCode = recoveryCode;
+    }
+
 }

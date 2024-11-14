@@ -52,6 +52,19 @@ a {
     background-color: transparent
 }
 
+.hover-spoiler {
+    background-color: #111;
+    color: transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+.hover-spoiler:hover {
+    background-color: transparent;
+    color: #111;
+    user-select: auto;
+}
+
 a:active,
 a:hover {
     outline: 0
