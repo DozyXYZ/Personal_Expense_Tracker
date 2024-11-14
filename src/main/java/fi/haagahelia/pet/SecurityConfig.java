@@ -22,7 +22,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/register", "/createUser").permitAll()
+                        .requestMatchers("/register", "/createUser", "/reset", "/resetPassword").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/expenses", true).permitAll())
                 .logout(logout -> logout.permitAll());

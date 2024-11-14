@@ -30,6 +30,9 @@ public class ExpenseController {
     @Autowired
     private AppUserRepository userRepository;
 
+    @Autowired
+    private PasswordResetService passwordResetService;
+
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -38,6 +41,11 @@ public class ExpenseController {
     @GetMapping("/register")
     public String showRegistrationForm() {
         return "register";
+    }
+
+    @GetMapping("/reset")
+    public String showResetPasswordForm() {
+        return "resetpassword";
     }
 
     // Principal is used to get the username of the currently logged in user
@@ -87,6 +95,14 @@ public class ExpenseController {
     public String createUser(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
         creationService.createUser(username, password, email);
         return "redirect:/login";
+    }
+
+    @PostMapping("/resetPassword")
+    public String resetPassword(@RequestParam String username, @RequestParam String recoveryCode,
+            @RequestParam String newPassword, Model model) {
+        String message = passwordResetService.resetPassword(username, recoveryCode, newPassword);
+        model.addAttribute("message", message);
+        return "resetpassword";
     }
 
 }
