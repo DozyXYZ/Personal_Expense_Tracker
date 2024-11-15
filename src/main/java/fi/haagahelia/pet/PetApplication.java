@@ -16,6 +16,7 @@ import fi.haagahelia.pet.domain.Expense;
 import fi.haagahelia.pet.domain.ExpenseRepository;
 import fi.haagahelia.pet.domain.TypeExpense;
 import fi.haagahelia.pet.domain.TypeExpenseRepository;
+import fi.haagahelia.pet.web.FilesExporter;
 
 @SpringBootApplication
 public class PetApplication {
@@ -24,6 +25,11 @@ public class PetApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PetApplication.class, args);
+	}
+
+	@Bean
+	public FilesExporter fileExport() {
+		return new FilesExporter();
 	}
 
 	@Bean

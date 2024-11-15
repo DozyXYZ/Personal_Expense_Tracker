@@ -1,5 +1,6 @@
 package fi.haagahelia.pet.web;
 
+import java.io.IOException;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,16 @@ import fi.haagahelia.pet.domain.AppUser;
 import fi.haagahelia.pet.domain.AppUserRepository;
 import fi.haagahelia.pet.domain.Expense;
 import fi.haagahelia.pet.domain.TypeExpenseRepository;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class ExpenseController {
 
     @Autowired
     private ExpenseService expenseService;
+
+    @Autowired
+    FilesExporter exporter;
 
     @Autowired
     private TypeExpenseRepository typeRepository;
@@ -67,5 +72,11 @@ public class ExpenseController {
         String username = principal.getName();
         expenseService.saveExpenseForUser(expense, username);
         return "redirect:/expenses";
+    }
+
+    @GetMapping("/export")
+    public void expensesToCSV(HttpServletResponse response, Principal principal) throws IOException {
+        String username = principal.getName();
+        exporter.exportToCSV(response, username);
     }
 }

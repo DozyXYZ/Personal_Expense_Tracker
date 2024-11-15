@@ -85,4 +85,9 @@ public class Expense {
         this.user = user;
     }
 
+    // get the type for the CSV export of Expense table
+    public String getTypeExpenseType() {
+        return typeExpense != null ? typeExpense.getType() : null;
+    }
+
 }
