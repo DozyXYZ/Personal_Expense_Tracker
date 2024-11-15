@@ -8,7 +8,7 @@ import fi.haagahelia.pet.domain.AppUser;
 import fi.haagahelia.pet.domain.AppUserRepository;
 
 @Service
-public class PasswordResetService {
+public class UserPasswordResetService {
 
     @Autowired
     private AppUserRepository userRepository;
@@ -22,7 +22,6 @@ public class PasswordResetService {
             String newPasswordHash = passwordEncoder.encode(newPassword);
             user.setPasswordHash(newPasswordHash);
             userRepository.save(user);
-
             return "Password reset successful. Please log in with your new password.";
         } else {
             return "Invalid recovery code or username. Please try again.";
