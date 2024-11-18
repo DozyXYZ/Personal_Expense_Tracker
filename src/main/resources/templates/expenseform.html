@@ -3,42 +3,51 @@
 
 <head>
     <title>Add Expense</title>
-    <link type="text/css" rel="stylesheet" href="css/bootstrp.min.css" th:href="@{css/bootstrp.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
 </head>
 
 <body>
-    <h1>Add New Expense</h1>
-    <form th:action="@{/save}" th:object="${expense}" method="post">
-        <input type="hidden" th:field="*{id}" />
+    <div class="container mt-4">
+        <h1 class="mb-4">Add New Expense</h1>
 
-        <div>
-            <label for="date">Date:</label>
-            <input type="date" id="date" th:field="*{date}" />
-        </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form th:action="@{/save}" th:object="${expense}" method="post">
+                    <input type="hidden" th:field="*{id}" />
 
-        <div>
-            <label for="type">Type</label>
-            <select id="type" th:field="*{typeExpense.id}">
-                <option th:each="typeExpense: ${typeExpenses}" th:value="${typeExpense.id}"
-                    th:text="${typeExpense.type}">
-                </option>
-            </select>
-        </div>
+                    <div class="form-group mt-3">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" th:field="*{date}" />
+                    </div>
 
-        <div>
-            <label for="description">Description:</label>
-            <input type="text" id="description" th:field="*{description}" />
-        </div>
+                    <div class="form-group mt-3">
+                        <label for="type">Type</label>
+                        <select id="type" th:field="*{typeExpense.id}">
+                            <option th:each="typeExpense: ${typeExpenses}" th:value="${typeExpense.id}"
+                                th:text="${typeExpense.type}">
+                            </option>
+                        </select>
+                    </div>
 
-        <div>
-            <label for="amount">Amount (€):</label>
-            <input type="number" id="amount" th:field="*{amount}" />
-        </div>
+                    <div class="form-group mt-3">
+                        <label for="description">Description:</label>
+                        <input type="text" id="description" th:field="*{description}" />
+                    </div>
 
-        <div>
-            <button type="submit">Save</button>
+                    <div class="form-group mt-3">
+                        <label for="amount">Amount (€):</label>
+                        <input type="number" id="amount" th:field="*{amount}" />
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+
+                <a href="/" class="form-group mt-4">Cancel</a>
+            </div>
         </div>
-    </form>
+    </div>
 </body>
 
 </html>

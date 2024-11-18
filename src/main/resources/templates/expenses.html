@@ -3,22 +3,50 @@
 
 <head>
     <title>Your Expenses</title>
-    <link type="text/css" rel="stylesheet" href="css/bootstrp.min.css" th:href="@{css/bootstrp.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
 </head>
 
 <body>
     <div>
-        <p>Hello, <span th:text="${username}"></span>!</p>
-        <p>Please write down the recovery code somewhere you remember
+        <h1>Hello, <span th:text="${username}"></span>!</h1>
+
+        <p style="color: red;">Please write down the RECOVERY CODE somewhere you remember
             <span class="hover-spoiler" th:text="${recoveryCode}"></span>
         </p>
+
+        <a href="/addExpense" class="btn btn-success">Add Expense</a>
+
+        <a th:href="@{/export(type=${param.type}, year=${param.year}, month=${param.month})}" class="btn btn-info">
+            Export to CSV
+        </a>
     </div>
-    <div class="col-md-4" style="padding:20px 0">
+
+    <div style="display: flex; justify-content: flex-end;">
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out" class="btn btn-sm btn-secondary" />
         </form>
     </div>
-    <table>
+
+    <form action="#" th:action="@{/expenses/filter}" method="get">
+        <div class="form-group mt-3">
+            <label for="type">Type:</label>
+            <select id="type" name="type">
+                <option th:each="typeExpense: ${typeExpenses}" th:value="${typeExpense.type}"
+                    th:text="${typeExpense.type}">
+                </option>
+            </select>
+
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year">
+
+            <label for="month">Month:</label>
+            <input type="number" id="month" name="month">
+
+            <button class="btn btn-info" type="submit">Filter</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Date</th>
@@ -42,36 +70,6 @@
             </tr>
         </tbody>
     </table>
-
-    <form action="#" th:action="@{/expenses/filter}" method="get">
-        <div>
-            <label for="type">Type:</label>
-            <select id="type" name="type">
-                <option th:each="typeExpense: ${typeExpenses}" th:value="${typeExpense.type}"
-                    th:text="${typeExpense.type}">
-                </option>
-            </select>
-        </div>
-
-        <div>
-            <label for="year">Year:</label>
-            <input type="number" id="year" name="year">
-        </div>
-
-        <div>
-            <label for="month">Month:</label>
-            <input type="number" id="month" name="month">
-        </div>
-
-        <button type="submit">Filter</button>
-    </form>
-
-    <div>
-        <a href="/addExpense" class="btn btn-success">Add Expense</a>
-        <a th:href="@{/export(type=${param.type}, year=${param.year}, month=${param.month})}" class="btn btn-info">
-            Export to CSV
-        </a>
-    </div>
 </body>
 
 </html>

@@ -38,14 +38,17 @@ public class ExpenseController {
     @GetMapping({ "/", "/expenses" })
     public String expenseList(Model model, Principal principal) {
         String username = principal.getName();
+
         AppUser user = userRepository.findByUsername(username);
         String recoveryCode = user.getRecoveryCode();
         model.addAttribute("username", username);
         model.addAttribute("recoveryCode", recoveryCode);
+
         model.addAttribute("expenses", expenseService.getExpensesForUser(username));
         List<TypeExpense> typeExpenses = (List<TypeExpense>) typeRepository.findAll();
         typeExpenses.add(0, new TypeExpense()); // Add an empty TypeExpense at the beginning of the list
         model.addAttribute("typeExpenses", typeExpenses);
+
         return "expenses";
     }
 
@@ -100,16 +103,21 @@ public class ExpenseController {
             Model model) {
 
         String username = principal.getName();
-        List<Expense> expenses;
 
-        System.out.println("Filter parameters - Type: " + type + ", Year: " + year + ", Month: " + month);
+        // System.out.println("Filter parameters - Type: " + type + ", Year: " + year +
+        // ", Month: " + month);
 
-        expenses = expenseService.getExpensesByUserAndFilters(username, type, year, month);
-
+        List<Expense> expenses = expenseService.getExpensesByUserAndFilters(username, type, year, month);
         model.addAttribute("expenses", expenses);
+
         List<TypeExpense> typeExpenses = (List<TypeExpense>) typeRepository.findAll();
         typeExpenses.add(0, new TypeExpense()); // Add an empty TypeExpense at the beginning of the list
         model.addAttribute("typeExpenses", typeExpenses);
+
+        AppUser user = userRepository.findByUsername(username);
+        String recoveryCode = user.getRecoveryCode();
+        model.addAttribute("username", username);
+        model.addAttribute("recoveryCode", recoveryCode);
 
         return "expenses";
     }
