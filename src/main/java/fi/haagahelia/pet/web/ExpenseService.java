@@ -40,24 +40,8 @@ public class ExpenseService {
         }
     }
 
-    public List<Expense> getExpensesForUserAndType(String username, String type) {
+    public List<Expense> getExpensesByUserAndFilters(String username, String type, Integer year, Integer month) {
         AppUser user = userRepository.findByUsername(username);
-        return repository.findByUserAndType(user, type);
-    }
-
-    public List<Expense> getExpensesForUserAndYear(String username, int year) {
-        AppUser user = userRepository.findByUsername(username);
-        return repository.findByUserAndYear(user, year);
-    }
-
-    public List<Expense> getExpensesForUserAndYearAndMonth(String username, int year, int month) {
-        AppUser user = userRepository.findByUsername(username);
-        return repository.findByUserAndYearAndMonth(user, year, month);
-    }
-
-    public List<Expense> getExpensesForUserAndTypeAndYearAndMonth(String username, String type, int year,
-            int month) {
-        AppUser user = userRepository.findByUsername(username);
-        return repository.findByUserAndTypeAndYearAndMonth(user, type, year, month);
+        return repository.findByUserAndFilters(user, type, year, month);
     }
 }

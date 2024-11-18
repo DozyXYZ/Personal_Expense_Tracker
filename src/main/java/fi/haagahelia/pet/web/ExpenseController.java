@@ -97,22 +97,15 @@ public class ExpenseController {
         String username = principal.getName();
         List<Expense> expenses;
 
-        if (type != null && year != null && month != null) {
-            expenses = expenseService.getExpensesForUserAndTypeAndYearAndMonth(username, type, year, month);
-        } else if (year != null && month != null) {
-            expenses = expenseService.getExpensesForUserAndYearAndMonth(username, year, month);
-        } else if (year != null) {
-            expenses = expenseService.getExpensesForUserAndYear(username, year);
-        } else if (type != null) {
-            expenses = expenseService.getExpensesForUserAndType(username, type);
-        } else {
-            expenses = expenseService.getExpensesForUser(username);
-        }
+        System.out.println("Filter parameters - Type: " + type + ", Year: " + year + ", Month: " + month);
+
+        expenses = expenseService.getExpensesByUserAndFilters(username, type, year, month);
 
         model.addAttribute("expenses", expenses);
         List<TypeExpense> typeExpenses = (List<TypeExpense>) typeRepository.findAll();
         typeExpenses.add(0, new TypeExpense()); // Add an empty TypeExpense at the beginning of the list
         model.addAttribute("typeExpenses", typeExpenses);
+
         return "expenses";
     }
 }
