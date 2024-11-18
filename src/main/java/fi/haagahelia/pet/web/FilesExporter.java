@@ -16,7 +16,8 @@ public class FilesExporter {
     @Autowired
     private ExpenseService expenseService;
 
-    public void exportToCSV(HttpServletResponse response, String username) throws IOException {
+    public void exportToCSV(HttpServletResponse response, String username, String type, Integer year, Integer month)
+            throws IOException {
         response.setContentType("text/csv");
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=expenses.csv";
@@ -29,7 +30,7 @@ public class FilesExporter {
 
         csvWriter.writeHeader(csvHeader);
 
-        List<Expense> listExpenses = expenseService.getExpensesForUser(username);
+        List<Expense> listExpenses = expenseService.getExpensesByUserAndFilters(username, type, year, month);
 
         for (Expense expense : listExpenses) {
             csvWriter.write(expense, nameMapping);

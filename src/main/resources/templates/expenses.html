@@ -68,7 +68,9 @@
 
     <div>
         <a href="/addExpense" class="btn btn-success">Add Expense</a>
-        <a href="/export" class="btn btn-info">Export to CSV</a>
+        <a th:href="@{/export(type=${param.type}, year=${param.year}, month=${param.month})}" class="btn btn-info">
+            Export to CSV
+        </a>
     </div>
 </body>
 

@@ -81,9 +81,14 @@ public class ExpenseController {
     }
 
     @GetMapping("/export")
-    public void expensesToCSV(HttpServletResponse response, Principal principal) throws IOException {
+    public void expensesToCSV(
+            HttpServletResponse response,
+            Principal principal,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) Integer month) throws IOException {
         String username = principal.getName();
-        exporter.exportToCSV(response, username);
+        exporter.exportToCSV(response, username, type, year, month);
     }
 
     @GetMapping("/expenses/filter")
