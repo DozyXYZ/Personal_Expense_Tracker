@@ -42,6 +42,30 @@
             </tr>
         </tbody>
     </table>
+
+    <form action="#" th:action="@{/expenses/filter}" method="get">
+        <div>
+            <label for="type">Type:</label>
+            <select id="type" name="type">
+                <option th:each="typeExpense: ${typeExpenses}" th:value="${typeExpense.type}"
+                    th:text="${typeExpense.type}">
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year">
+        </div>
+
+        <div>
+            <label for="month">Month:</label>
+            <input type="number" id="month" name="month">
+        </div>
+
+        <button type="submit">Filter</button>
+    </form>
+
     <div>
         <a href="/addExpense" class="btn btn-success">Add Expense</a>
         <a href="/export" class="btn btn-info">Export to CSV</a>

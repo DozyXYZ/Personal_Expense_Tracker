@@ -77,8 +77,8 @@ public class PetApplication {
 
 			log.info("save a couple of expenses");
 			// January expenses
-			repository.save(new Expense(LocalDate.of(2024, 1, 1), housing, "Rent", 1000, user1));
-			repository.save(new Expense(LocalDate.of(2024, 1, 5), utilities, "Electricity Bill", 150, user1));
+			repository.save(new Expense(LocalDate.of(2023, 1, 1), housing, "Rent", 1000, user1));
+			repository.save(new Expense(LocalDate.of(2023, 1, 5), utilities, "Electricity Bill", 150, user1));
 			repository.save(new Expense(LocalDate.of(2024, 1, 10), groceries, "Grocery Store", 200, user1));
 			repository.save(new Expense(LocalDate.of(2024, 1, 15), transportation, "Gas", 50, user1));
 			repository.save(new Expense(LocalDate.of(2024, 1, 20), healthcare, "Prescription", 30, user1));
