@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Expenses Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
+</head>
+
+<body>
+    <h1>Expenses Charts</h1>
+
+    <form th:action="@{/expenses/drawchart}" method="get">
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" required>
+
+        <label for="month">Month:</label>
+        <input type="number" id="month" name="month" min="1" max="12">
+
+        <button type="submit" class="btn btn-success">Draw Charts</button>
+    </form>
+
+    <div class="chart-container">
+        <div>
+            <h1>Annual Expenses for <span th:text="${year}"></span></h1>
+            <canvas id="annualExpenseChart"></canvas>
+        </div>
+
+        <div th:if="${month != null}">
+            <h1>Monthly Expense Details for <span th:text="${month}"></span>/<span th:text="${year}"></span></h1>
+            <canvas id="monthlyExpenseChart"></canvas>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        /* Annual Bar Chart */
+        var annualCtx = document.getElementById('annualExpenseChart').getContext('2d');
+        var monthlyExpenses = /*[[${monthlyExpenses}]]*/ {};
+
+        // Convert keys (month numbers) to month names
+        var annualLabels = Object.keys(monthlyExpenses).map(function (key) {
+            return new Date(0, Number(key) - 1).toLocaleString('default', { month: 'long' });
+        });
+
+        // Extract expense values
+        var annualData = Object.values(monthlyExpenses);
+
+        console.log("Annual Labels: ", annualLabels);
+        console.log("Annual Data: ", annualData);
+
+        var annualChart = new Chart(annualCtx, {
+            type: 'bar',
+            data: {
+                labels: annualLabels,
+                datasets: [{
+                    label: 'Expenses',
+                    data: annualData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        /* Monthly Expense Details Chart */
+        var monthlyExpenseDetails = /*[[${monthlyExpenseDetails}]]*/ {};
+        var monthlyLabels = Object.keys(monthlyExpenseDetails);
+        var monthlyData = Object.values(monthlyExpenseDetails);
+
+        if (monthlyLabels.length > 0) { // Check to avoid errors if no data
+            var monthlyCtx = document.getElementById('monthlyExpenseChart').getContext('2d');
+        }
+
+        var monthlyChart = new Chart(monthlyCtx, {
+            type: 'pie',
+            data: {
+                labels: monthlyLabels,
+                datasets: [{
+                    label: 'Expense Details',
+                    data: monthlyData,
+                    backgroundColor: [
+                        'rgba(255, 159, 64, 0.2)',  // Soft orange
+                        'rgba(255, 99, 132, 0.2)',  // Soft red
+                        'rgba(54, 162, 235, 0.2)',  // Light blue
+                        'rgba(75, 192, 192, 0.2)',  // Soft teal
+                        'rgba(153, 102, 255, 0.2)', // Light purple
+                        'rgba(255, 159, 220, 0.2)', // Light pink
+                        'rgba(139, 195, 74, 0.2)',  // Soft green
+                        'rgba(255, 235, 59, 0.2)',  // Soft yellow
+                        'rgba(233, 30, 99, 0.2)',   // Vivid pink
+                        'rgba(156, 39, 176, 0.2)',  // Purple
+                        'rgba(0, 188, 212, 0.2)',   // Bright cyan
+                        'rgba(255, 87, 34, 0.2)',   // Bright orange
+                        'rgba(33, 150, 243, 0.2)',  // Sky blue
+                        'rgba(103, 58, 183, 0.2)',  // Indigo
+                        'rgba(76, 175, 80, 0.2)'    // Light green
+                    ],
+                    borderColor: [
+                        'rgba(255, 159, 64, 1)',    // Soft orange
+                        'rgba(255, 99, 132, 1)',    // Soft red
+                        'rgba(54, 162, 235, 1)',    // Light blue
+                        'rgba(75, 192, 192, 1)',    // Soft teal
+                        'rgba(153, 102, 255, 1)',   // Light purple
+                        'rgba(255, 159, 220, 1)',   // Light pink
+                        'rgba(139, 195, 74, 1)',    // Soft green
+                        'rgba(255, 235, 59, 1)',    // Soft yellow
+                        'rgba(233, 30, 99, 1)',     // Vivid pink
+                        'rgba(156, 39, 176, 1)',    // Purple
+                        'rgba(0, 188, 212, 1)',     // Bright cyan
+                        'rgba(255, 87, 34, 1)',     // Bright orange
+                        'rgba(33, 150, 243, 1)',    // Sky blue
+                        'rgba(103, 58, 183, 1)',    // Indigo
+                        'rgba(76, 175, 80, 1)'      // Light green
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Monthly Expense Details'
+                    }
+                }
+            }
+        });
+        console.log("Monthly Expenses: ", /*[[${monthlyExpenses}]]*/ '{}');
+        console.log("Monthly Expense Details: ", /*[[${monthlyExpenseDetails}]]*/ '{}');
+    </script>
+
+</body>
+
+</html>

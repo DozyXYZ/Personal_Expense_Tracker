@@ -3,6 +3,7 @@ package fi.haagahelia.pet.web;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.PathVariable;
 
 import fi.haagahelia.pet.domain.AppUser;
@@ -18,6 +20,9 @@ import fi.haagahelia.pet.domain.Expense;
 import fi.haagahelia.pet.domain.TypeExpense;
 import fi.haagahelia.pet.domain.TypeExpenseRepository;
 import jakarta.servlet.http.HttpServletResponse;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 @Controller
 public class ExpenseController {
@@ -33,6 +38,9 @@ public class ExpenseController {
 
     @Autowired
     private AppUserRepository userRepository;
+
+    // private static final Logger logger =
+    // LoggerFactory.getLogger(ExpenseController.class);
 
     // Principal is used to get the username of the currently logged in user
     @GetMapping({ "/", "/expenses" })
@@ -121,4 +129,34 @@ public class ExpenseController {
 
         return "expenses";
     }
+
+    @GetMapping("/expenses/chart")
+    public String showChartPage() {
+        return "expenseschart";
+    }
+
+    @GetMapping("/expenses/drawchart")
+    public String getAnnualExpenses(
+            @RequestParam Integer year,
+            @RequestParam(required = false) Integer month,
+            Principal principal,
+            Model model) {
+
+        String username = principal.getName();
+
+        Map<Integer, Double> monthlyExpenses = expenseService.getMonthlyExpensesForYear(username, year);
+        // logger.info("Monthly Expenses: {}", monthlyExpenses);
+        model.addAttribute("monthlyExpenses", monthlyExpenses);
+        model.addAttribute("year", year);
+
+        if (month != null) {
+            Map<String, Double> monthlyExpenseDetails = expenseService.getMonthlyExpenseDetails(username, year, month);
+            // logger.info("Monthly Expense Details: {}", monthlyExpenseDetails);
+            model.addAttribute("monthlyExpenseDetails", monthlyExpenseDetails);
+            model.addAttribute("month", month);
+        }
+
+        return "expenseschart";
+    }
+
 }
