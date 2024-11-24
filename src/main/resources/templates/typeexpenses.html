@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <title>Type Expenses</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
+</head>
+
+<body>
+    <h1>Hello, <span sec:authentication="name"></span>!</h1>
+
+    <a sec:authorize="hasAuthority('ADMIN')" href="/typeExpenses/add" class="btn btn-success">
+        Add / Edit Type Expense
+    </a>
+
+    <a href="/" class="btn btn-info">Back</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="te : ${typeExpenses}">
+                <td th:text="${te.type}"></td>
+
+                <td>
+                    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/typeExpenses/edit/{id}(id=${te.id})}"
+                        class="btn btn-primary" role="button">Edit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+
+</html>

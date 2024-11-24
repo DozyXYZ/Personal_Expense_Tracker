@@ -8,19 +8,22 @@
 
 <body>
     <div>
-        <h1>Hello, <span th:text="${username}"></span>!</h1>
+        <h1>Hello, <span sec:authentication="name"></span>!</h1>
 
         <p style="color: red;">Please write down the RECOVERY CODE somewhere you remember
             <span class="hover-spoiler" th:text="${recoveryCode}"></span>
         </p>
 
-        <a href="/addExpense" class="btn btn-success">Add Expense</a>
+        <a href="/expenses/add" class="btn btn-success">Add Expense</a>
 
-        <a th:href="@{/export(type=${param.type}, year=${param.year}, month=${param.month})}" class="btn btn-info">
+        <a th:href="@{/expenses/export(type=${param.type}, year=${param.year}, month=${param.month})}"
+            class="btn btn-info">
             Export to CSV
         </a>
 
         <a href="/expenses/chart" class="btn btn-success">Draw chart</a>
+
+        <a sec:authorize="hasAuthority('ADMIN')" href="/typeExpenses" class="btn btn-danger">Type Expenses</a>
     </div>
 
     <div style="display: flex; justify-content: flex-end;">
@@ -64,10 +67,10 @@
                 <td th:text="${e.description}"></td>
                 <td th:text="${e.amount}"></td>
                 <td>
-                    <a th:href="@{/delete/{id}(id=${e.id})}" class="btn btn-danger" role="button">Delete</a>
+                    <a th:href="@{/expenses/delete/{id}(id=${e.id})}" class="btn btn-danger" role="button">Delete</a>
                 </td>
                 <td>
-                    <a th:href="@{/edit/{id}(id=${e.id})}" class="btn btn-primary" role="button">Edit</a>
+                    <a th:href="@{/expenses/edit/{id}(id=${e.id})}" class="btn btn-primary" role="button">Edit</a>
                 </td>
             </tr>
         </tbody>

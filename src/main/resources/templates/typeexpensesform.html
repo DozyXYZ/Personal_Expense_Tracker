@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <title>Add / Edit Type Expense</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Add / Edit Type Expense</h1>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form th:action="@{/typeExpenses/save}" th:object="${typeExpense}" method="post">
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="form-group mt-3">
+                        <label for="type">Type:</label>
+                        <input type="text" id="type" th:field="*{type}" />
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+
+                <a href="/typeExpenses" class="btn btn-info">Cancel</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

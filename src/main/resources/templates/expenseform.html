@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Add Expense</title>
+    <title>Add / Edit Expense</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
 </head>
 
 <body>
     <div class="container mt-4">
-        <h1 class="mb-4">Add New Expense</h1>
+        <h1 class="mb-4">Add / Edit Expense</h1>
 
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <form th:action="@{/save}" th:object="${expense}" method="post">
+                <form th:action="@{/expenses/save}" th:object="${expense}" method="post">
                     <input type="hidden" th:field="*{id}" />
 
                     <div class="form-group mt-3">

@@ -60,21 +60,21 @@ public class ExpenseController {
         return "expenses";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/expenses/delete/{id}")
     public String deleteExpense(@PathVariable("id") Long expenseId, Principal principal) {
         String username = principal.getName();
         expenseService.deleteExpenseForUser(expenseId, username);
         return "redirect:/expenses";
     }
 
-    @GetMapping("/addExpense")
+    @GetMapping("/expenses/add")
     public String showAddForm(Model model) {
         model.addAttribute("expense", new Expense());
         model.addAttribute("typeExpenses", typeRepository.findAll());
         return "expenseform";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/expenses/edit/{id}")
     public String showEditForm(@PathVariable("id") Long expenseId, Principal principal, Model model) {
         String username = principal.getName();
         Expense expense = expenseService.getExpensesForUser(username).stream().filter(e -> e.getId().equals(expenseId))
@@ -84,14 +84,14 @@ public class ExpenseController {
         return "expenseform";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/expenses/save")
     public String save(Expense expense, Principal principal) {
         String username = principal.getName();
         expenseService.saveExpenseForUser(expense, username);
         return "redirect:/expenses";
     }
 
-    @GetMapping("/export")
+    @GetMapping("/expenses/export")
     public void expensesToCSV(
             HttpServletResponse response,
             Principal principal,
