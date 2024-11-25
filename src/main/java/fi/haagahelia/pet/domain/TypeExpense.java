@@ -11,6 +11,13 @@ import jakarta.persistence.GenerationType;
 
 import java.util.List;
 
+/**
+ * This file defines the TypeExpense entity class, which represents a type of
+ * expense in the application.
+ * The TypeExpense class includes attributes: id and type.
+ * It has a one-to-many relationship with the Expense entity.
+ */
+
 @Entity
 public class TypeExpense {
 

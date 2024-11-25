@@ -6,6 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.GenerationType;
 
+/**
+ * This file defines the AppUser class, which represents a user in the
+ * application.
+ * The class includes attributes: username, password, email, role, and recovery
+ * It provides methods for user authentication, role management, and other
+ * user-related functionalities.
+ */
+
 @Entity
 public class AppUser {
 

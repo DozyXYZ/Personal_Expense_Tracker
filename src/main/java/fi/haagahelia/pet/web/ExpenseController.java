@@ -21,8 +21,18 @@ import fi.haagahelia.pet.domain.TypeExpense;
 import fi.haagahelia.pet.domain.TypeExpenseRepository;
 import jakarta.servlet.http.HttpServletResponse;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+/**
+ * This file defines the ExpenseController class, which is a Spring MVC
+ * controller class that handles HTTP requests related to expenses in the
+ * application.
+ * 
+ * The class includes methods for displaying, adding, editing, and deleting
+ * expenses, as well as exporting expenses to a CSV file, filtering expenses by
+ * type, year, and month, and draw charts.
+ * 
+ * The class utilizes the ExpenseService, FilesExporter, TypeExpenseRepository,
+ * and AppUserRepository classes.
+ */
 
 @Controller
 public class ExpenseController {
@@ -39,10 +49,15 @@ public class ExpenseController {
     @Autowired
     private AppUserRepository userRepository;
 
-    // private static final Logger logger =
-    // LoggerFactory.getLogger(ExpenseController.class);
-
-    // Principal is used to get the username of the currently logged in user
+    /**
+     * Handles requests to the root ("/") and "/expenses" URLs.
+     * Retrieves the current user's username and recovery code, adds them to the
+     * model, along with the user's expenses and a list of expense types.
+     * 
+     * @param model     the model to which attributes are added
+     * @param principal the security principal of the currently authenticated user
+     * @return the name of the view to be rendered ("expenses")
+     */
     @GetMapping({ "/", "/expenses" })
     public String expenseList(Model model, Principal principal) {
         String username = principal.getName();
@@ -54,12 +69,19 @@ public class ExpenseController {
 
         model.addAttribute("expenses", expenseService.getExpensesForUser(username));
         List<TypeExpense> typeExpenses = (List<TypeExpense>) typeRepository.findAll();
-        typeExpenses.add(0, new TypeExpense()); // Add an empty TypeExpense at the beginning of the list
+        typeExpenses.add(0, new TypeExpense());
         model.addAttribute("typeExpenses", typeExpenses);
 
         return "expenses";
     }
 
+    /**
+     * Handles requests to delete an expense by its ID.
+     * 
+     * @param expenseId the ID of the expense to be deleted
+     * @param principal the security principal of the currently authenticated user
+     * @return the new "expenses" view to be redirected to after deletion
+     */
     @GetMapping("/expenses/delete/{id}")
     public String deleteExpense(@PathVariable("id") Long expenseId, Principal principal) {
         String username = principal.getName();
@@ -67,6 +89,13 @@ public class ExpenseController {
         return "redirect:/expenses";
     }
 
+    /**
+     * Handles requests to show the form for adding a new expense.
+     * Adds a new Expense object and a list of expense types to the model.
+     * 
+     * @param model the model to which attributes are added
+     * @return the name of the view to be rendered ("expenseform")
+     */
     @GetMapping("/expenses/add")
     public String showAddForm(Model model) {
         model.addAttribute("expense", new Expense());
@@ -74,6 +103,16 @@ public class ExpenseController {
         return "expenseform";
     }
 
+    /**
+     * Handles requests to show the form for editing an existing expense.
+     * Retrieves the expense by its ID, adds it to the model, along with a list of
+     * expense types.
+     * 
+     * @param expenseId the ID of the expense to be edited
+     * @param principal the security principal of the currently authenticated user
+     * @param model     the model to which attributes are added
+     * @return the name of the view to be rendered ("expenseform")
+     */
     @GetMapping("/expenses/edit/{id}")
     public String showEditForm(@PathVariable("id") Long expenseId, Principal principal, Model model) {
         String username = principal.getName();
@@ -84,6 +123,15 @@ public class ExpenseController {
         return "expenseform";
     }
 
+    /**
+     * Handles requests to save a new or edited expense.
+     * Saves the expense for the currently authenticated user and redirects to the
+     * "expenses" view.
+     * 
+     * @param expense   the expense to be saved
+     * @param principal the security principal of the currently authenticated user
+     * @return the new "expenses" view to be redirected to after saving
+     */
     @PostMapping("/expenses/save")
     public String save(Expense expense, Principal principal) {
         String username = principal.getName();
@@ -91,6 +139,16 @@ public class ExpenseController {
         return "redirect:/expenses";
     }
 
+    /**
+     * Handles requests to export expenses to a CSV file.
+     * 
+     * @param response  the HTTP response to which the CSV file is written
+     * @param principal the security principal of the currently authenticated user
+     * @param type      the type of expense to filter by
+     * @param year      the year to filter by
+     * @param month     the month to filter by
+     * @throws IOException if an I/O error occurs
+     */
     @GetMapping("/expenses/export")
     public void expensesToCSV(
             HttpServletResponse response,
@@ -102,6 +160,18 @@ public class ExpenseController {
         exporter.exportToCSV(response, username, type, year, month);
     }
 
+    /**
+     * Handles requests to filter expenses by type, year, and month.
+     * Retrieves the current user's username, adds them to the model, along with the
+     * filtered expenses.
+     * 
+     * @param type      the type of expense to filter by
+     * @param year      the year to filter by
+     * @param month     the month to filter by
+     * @param principal the security principal of the currently authenticated user
+     * @param model     the model to which attributes are added
+     * @return the name of the view to be rendered ("expenses")
+     */
     @GetMapping("/expenses/filter")
     public String filterExpenses(
             @RequestParam(required = false) String type,
@@ -112,14 +182,11 @@ public class ExpenseController {
 
         String username = principal.getName();
 
-        // System.out.println("Filter parameters - Type: " + type + ", Year: " + year +
-        // ", Month: " + month);
-
         List<Expense> expenses = expenseService.getExpensesByUserAndFilters(username, type, year, month);
         model.addAttribute("expenses", expenses);
 
         List<TypeExpense> typeExpenses = (List<TypeExpense>) typeRepository.findAll();
-        typeExpenses.add(0, new TypeExpense()); // Add an empty TypeExpense at the beginning of the list
+        typeExpenses.add(0, new TypeExpense());
         model.addAttribute("typeExpenses", typeExpenses);
 
         AppUser user = userRepository.findByUsername(username);
@@ -130,11 +197,29 @@ public class ExpenseController {
         return "expenses";
     }
 
+    /**
+     * Handles requests to show the chart page.
+     * 
+     * @return the name of the view to be rendered ("expenseschart")
+     */
     @GetMapping("/expenses/chart")
     public String showChartPage() {
         return "expenseschart";
     }
 
+    /**
+     * Handles requests to draw a chart of annual expenses and a chart for monthly
+     * expenses in a specific year.
+     * 
+     * Retrieves the current user's username, adds them to the model, along with the
+     * monthly expenses for the specified year.
+     * 
+     * @param year      the year to draw the chart for
+     * @param month     the month to draw the chart for
+     * @param principal the security principal of the currently authenticated user
+     * @param model     the model to which attributes are added
+     * @return the name of the view to be rendered ("expenseschart")
+     */
     @GetMapping("/expenses/drawchart")
     public String getAnnualExpenses(
             @RequestParam Integer year,
@@ -145,13 +230,11 @@ public class ExpenseController {
         String username = principal.getName();
 
         Map<Integer, Double> monthlyExpenses = expenseService.getMonthlyExpensesForYear(username, year);
-        // logger.info("Monthly Expenses: {}", monthlyExpenses);
         model.addAttribute("monthlyExpenses", monthlyExpenses);
         model.addAttribute("year", year);
 
         if (month != null) {
             Map<String, Double> monthlyExpenseDetails = expenseService.getMonthlyExpenseDetails(username, year, month);
-            // logger.info("Monthly Expense Details: {}", monthlyExpenseDetails);
             model.addAttribute("monthlyExpenseDetails", monthlyExpenseDetails);
             model.addAttribute("month", month);
         }

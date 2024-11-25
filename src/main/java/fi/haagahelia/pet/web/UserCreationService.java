@@ -11,6 +11,13 @@ import org.springframework.stereotype.Service;
 import fi.haagahelia.pet.domain.AppUser;
 import fi.haagahelia.pet.domain.AppUserRepository;
 
+/**
+ * This file defines the UserCreationService class, which is a Spring service
+ * class that interacts with the AppUserRepository class. It includes a method
+ * for creating a new user with a unique recovery code.
+ * 
+ * The class uses the AppUserRepository class and BcryptPasswordEncoder method.
+ */
 @Service
 public class UserCreationService {
 
@@ -20,6 +27,8 @@ public class UserCreationService {
     @Autowired
     private AppUserRepository userRepository;
 
+    // Generate a unique string for a recovery code with 1 capital letter and 6
+    // digits (e.g., A123456)
     private String generateUniqueString() {
         Random random = new Random();
         String uniqueString;
@@ -39,6 +48,7 @@ public class UserCreationService {
         return uniqueString;
     }
 
+    // Create a new user with a unique recovery code
     public AppUser createUser(String username, String password, String email) {
         String passwordHash = passwordEncoder.encode(password);
         String recoveryCode = generateUniqueString();

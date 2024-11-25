@@ -8,6 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+/**
+ * This file defines the Expense entity class, which represents an expense
+ * record in the application.
+ * The Expense class includes attributes such as date, description, amount, type
+ * of expense, and the user who made the expense.
+ * It has a many-to-one relationship with the TypeExpense and AppUser entities.
+ */
+
 @Entity
 public class Expense {
 
@@ -85,7 +93,7 @@ public class Expense {
         this.user = user;
     }
 
-    // get the type for the CSV export of Expense table
+    // Get the type for the CSV export of Expense table
     public String getTypeExpenseType() {
         return typeExpense != null ? typeExpense.getType() : null;
     }

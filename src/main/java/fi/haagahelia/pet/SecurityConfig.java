@@ -11,6 +11,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import fi.haagahelia.pet.web.UserDetailServiceImpl;
 
+/**
+ * This class configures the security settings for the application.
+ * It sets up authentication and authorization rules, specifies the login and
+ * logout behavior, and defines beans for password encoding and the security
+ * filter chain.
+ * The configuration ensures that certain endpoints are publicly accessible
+ * while others require authentication.
+ */
+
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
@@ -18,6 +27,7 @@ public class SecurityConfig {
     @Autowired
     private UserDetailServiceImpl userDetailsService;
 
+    // Define the security chain bean
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -29,11 +39,14 @@ public class SecurityConfig {
         return http.build();
     }
 
+    // Configure the global authentication settings, set user details service and
+    // password encoder
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
+    // Define the password encoder bean
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

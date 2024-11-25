@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<!-- This page shows the filter to draw expenses charts and the charts themselves -->
+
 <head>
     <title>Expenses Charts</title>
+    <!-- Include chart.js library for drawing charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
 </head>
@@ -10,6 +13,7 @@
 <body>
     <h1>Expenses Charts</h1>
 
+    <!-- Form to select year and month for drawing charts -->
     <form th:action="@{/expenses/drawchart}" method="get">
         <label for="year">Year:</label>
         <input type="number" id="year" name="year" required>
@@ -22,6 +26,7 @@
 
     </form>
 
+    <!-- Container for the charts -->
     <div class="chart-container">
         <div>
             <h1>Annual Expenses for <span th:text="${year}"></span></h1>
@@ -36,20 +41,20 @@
 
     <script th:inline="javascript">
         /* Annual Bar Chart */
+        // Get the context of the canvas element for the annual expense chart
+        // Retrieve the monthly expenses data from the server-side model
         var annualCtx = document.getElementById('annualExpenseChart').getContext('2d');
         var monthlyExpenses = /*[[${monthlyExpenses}]]*/ {};
 
-        // Convert keys (month numbers) to month names
+        // Convert month numbers to month names for the chart labels
         var annualLabels = Object.keys(monthlyExpenses).map(function (key) {
             return new Date(0, Number(key) - 1).toLocaleString('default', { month: 'long' });
         });
 
-        // Extract expense values
+        // Extract the expense values for the chart data
         var annualData = Object.values(monthlyExpenses);
 
-        console.log("Annual Labels: ", annualLabels);
-        console.log("Annual Data: ", annualData);
-
+        // Create the annual bar chart using chart.js
         var annualChart = new Chart(annualCtx, {
             type: 'bar',
             data: {
@@ -71,15 +76,23 @@
             }
         });
 
+
+
+
         /* Monthly Expense Details Chart */
+        // Retrieve the monthly expense details data from the server-side
         var monthlyExpenseDetails = /*[[${monthlyExpenseDetails}]]*/ {};
+
+        // Extract the labels and data for the monthly expense details chart
         var monthlyLabels = Object.keys(monthlyExpenseDetails);
         var monthlyData = Object.values(monthlyExpenseDetails);
 
-        if (monthlyLabels.length > 0) { // Check to avoid errors if no data
+        // Check to avoid errors if no data is available
+        if (monthlyLabels.length > 0) {
             var monthlyCtx = document.getElementById('monthlyExpenseChart').getContext('2d');
         }
 
+        // Create the monthly pie chart using chart.js
         var monthlyChart = new Chart(monthlyCtx, {
             type: 'pie',
             data: {
@@ -137,8 +150,6 @@
                 }
             }
         });
-        console.log("Monthly Expenses: ", /*[[${monthlyExpenses}]]*/ '{}');
-        console.log("Monthly Expense Details: ", /*[[${monthlyExpenseDetails}]]*/ '{}');
     </script>
 
 </body>

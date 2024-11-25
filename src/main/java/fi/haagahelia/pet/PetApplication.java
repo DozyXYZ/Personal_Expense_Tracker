@@ -18,6 +18,14 @@ import fi.haagahelia.pet.domain.TypeExpense;
 import fi.haagahelia.pet.domain.TypeExpenseRepository;
 import fi.haagahelia.pet.web.FilesExporter;
 
+/**
+ * This file contains the main application logic for managing the project.
+ * It includes create and save example data of users, expenses, and expense
+ * types to the database.
+ * It registered bean for FilesExporter class, which enable the export function
+ * to CSV files.
+ */
+
 @SpringBootApplication
 public class PetApplication {
 

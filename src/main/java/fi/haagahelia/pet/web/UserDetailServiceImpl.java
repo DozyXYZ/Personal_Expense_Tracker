@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 import fi.haagahelia.pet.domain.AppUser;
 import fi.haagahelia.pet.domain.AppUserRepository;
 
-// authenticate, and authorize users with Spring Security
+/**
+ * This file defines the UserDetailServiceImpl class, which is a Spring service
+ * class that interacts with the AppUserRepository class. It includes a method
+ * for loading a user by username.
+ */
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 

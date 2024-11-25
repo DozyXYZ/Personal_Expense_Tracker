@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
+<!-- This page shows a form to add new type expense and edit a type expense -->
+
 <head>
     <title>Add / Edit Type Expense</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
@@ -10,8 +12,10 @@
     <div class="container mt-4">
         <h1 class="mb-4">Add / Edit Type Expense</h1>
 
+
         <div class="row">
             <div class="col-md-8 offset-md-2">
+                <!-- Form to add new type expense and edit a type expense -->
                 <form th:action="@{/typeExpenses/save}" th:object="${typeExpense}" method="post">
                     <input type="hidden" th:field="*{id}" />
 

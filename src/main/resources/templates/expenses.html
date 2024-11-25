@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
+<!-- 
+    The main page for managing user expenses.
+    It uses Thymeleaf for server-side rendering and Spring Security for authentication and authorization.
+-->
+
 <head>
     <title>Your Expenses</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
 </head>
 
 <body>
+    <!-- 
+        Greeting the authenticated user by name.
+        Displaying a recovery code with a warning to remember it hidden by default, appearing on hover.
+        Links for adding an expense, exporting expenses to CSV, drawing a chart, and accessing type expenses (admin only).
+    -->
     <div>
         <h1>Hello, <span sec:authentication="name"></span>!</h1>
 
@@ -26,14 +36,23 @@
         <a sec:authorize="hasAuthority('ADMIN')" href="/typeExpenses" class="btn btn-danger">Type Expenses</a>
     </div>
 
+    <!-- 
+        Sign out form positioned at the right of the page.
+    -->
     <div style="display: flex; justify-content: flex-end;">
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out" class="btn btn-sm btn-secondary" />
         </form>
     </div>
 
+    <!-- 
+        Form for filtering expenses by type, year, and month.
+    -->
     <form action="#" th:action="@{/expenses/filter}" method="get">
         <div class="form-group mt-3">
+            <!-- 
+                Dropdown for selecting the type of expense.
+            -->
             <label for="type">Type:</label>
             <select id="type" name="type">
                 <option th:each="typeExpense: ${typeExpenses}" th:value="${typeExpense.type}"
@@ -51,6 +70,9 @@
         </div>
     </form>
 
+    <!-- 
+        Table to display the list of expenses.
+    -->
     <table class="table table-striped">
         <thead>
             <tr>
@@ -61,6 +83,10 @@
             </tr>
         </thead>
         <tbody>
+            <!-- 
+                Looping through the list of expenses and displaying each one in a row.
+                Each row has a delete and an edit button. 
+            -->
             <tr th:each="e : ${expenses}">
                 <td th:text="${e.date}"></td>
                 <td th:text="${e.typeExpense.type}"></td>

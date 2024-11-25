@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
+<!-- This page shows all the expense type, it can only access by ADMIN authority -->
+
 <head>
     <title>Type Expenses</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrp.min.css" th:href="@{/css/bootstrp.min.css}" />
@@ -9,12 +11,15 @@
 <body>
     <h1>Hello, <span sec:authentication="name"></span>!</h1>
 
+    <!-- Link to add type expenses form, visible only to users with ADMIN authority -->
     <a sec:authorize="hasAuthority('ADMIN')" href="/typeExpenses/add" class="btn btn-success">
         Add / Edit Type Expense
     </a>
 
+    <!-- Link to navigate back to the home page -->
     <a href="/" class="btn btn-info">Back</a>
 
+    <!-- Table to display the list of type expenses -->
     <table class="table table-striped">
         <thead>
             <tr>
@@ -25,6 +30,7 @@
             <tr th:each="te : ${typeExpenses}">
                 <td th:text="${te.type}"></td>
 
+                <!-- Link to edit a type expense, visible only to users with ADMIN authority -->
                 <td>
                     <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/typeExpenses/edit/{id}(id=${te.id})}"
                         class="btn btn-primary" role="button">Edit</a>
