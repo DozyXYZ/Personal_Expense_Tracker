@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import fi.haagahelia.pet.web.ExpenseController;
 
+// Test for checking if the context is creating the controller
 @SpringBootTest
 class PetApplicationTests {
 

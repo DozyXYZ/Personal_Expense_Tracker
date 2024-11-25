@@ -17,36 +17,42 @@ public class ExpenseControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    // Test for accessing the expense list page. Status 200 is expected.
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testExpenseList() throws Exception {
         mockMvc.perform(get("/expenses")).andExpect(status().isOk());
     }
 
+    // Test for accessing the expense form. Status 200 is expected.
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testShowAddForm() throws Exception {
         mockMvc.perform(get("/expenses/add")).andExpect(status().isOk());
     }
 
+    // Test for accessing the expense edit form. Status 200 is expected.
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testShowEditForm() throws Exception {
         mockMvc.perform(get("/expenses/edit/1")).andExpect(status().isOk());
     }
 
+    // Test for delete user. Status 3xx is expected.
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testShowDeleteForm() throws Exception {
         mockMvc.perform(get("/expenses/delete/1")).andExpect(status().is3xxRedirection());
     }
 
+    // Test for exporting expenses. Status 200 is expected.
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testExportExpenses() throws Exception {
         mockMvc.perform(get("/expenses/export")).andExpect(status().isOk());
     }
 
+    // Test for filtering expenses. Status 200 is expected.
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testFilterExpenses() throws Exception {
@@ -57,12 +63,14 @@ public class ExpenseControllerTest {
                 .andExpect(status().isOk());
     }
 
+    // Test for accessing the chart page. Status 200 is expected.
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testShowChartPage() throws Exception {
         mockMvc.perform(get("/expenses/chart")).andExpect(status().isOk());
     }
 
+    // Test for drawing the charts. Status 200 is expected.
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testGetAnnualExpenses() throws Exception {

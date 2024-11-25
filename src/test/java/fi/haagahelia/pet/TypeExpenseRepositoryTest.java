@@ -17,18 +17,21 @@ public class TypeExpenseRepositoryTest {
     @Autowired
     private TypeExpenseRepository repository;
 
+    // Test for finding a type by type
     @Test
     public void findByTypeShouldReturnTypeExpense() {
         String type = "Housing";
         assertThat(repository.findByType(type)).isNotNull();
     }
 
+    // Test for creating a type
     @Test
     public void testCreateTypeExpense() {
         repository.save(new TypeExpense("Test"));
         assertThat(repository.findByType("Test")).isNotNull();
     }
 
+    // Test for deleting a type
     @Test
     public void testDeleteTypeExpense() {
         repository.save(new TypeExpense("Test"));
@@ -36,6 +39,7 @@ public class TypeExpenseRepositoryTest {
         assertThat(repository.findByType("Test")).isNull();
     }
 
+    // Test for updating a type
     @Test
     public void testUpdateTypeExpense() {
         TypeExpense type = repository.findByType("Housing");

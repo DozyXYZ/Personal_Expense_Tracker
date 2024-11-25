@@ -17,6 +17,7 @@ public class AppUserRepositoryTest {
     @Autowired
     private AppUserRepository repository;
 
+    // Test for finding a user by username
     @Test
     public void findByUsernameShouldReturnAppUser() {
         AppUser user = repository.findByUsername("user1");
@@ -24,6 +25,7 @@ public class AppUserRepositoryTest {
         assertThat(user.getUsername()).isEqualTo("user1");
     }
 
+    // Test for creating a user
     @Test
     public void testCreateUser() {
         AppUser user999 = new AppUser("user999", "$2a$12$U7bImtm90EDjzZ6jb6V0aecm8wW1dsOOLW0ghl2ItumyzH3f4UD9G",
@@ -32,6 +34,7 @@ public class AppUserRepositoryTest {
         assertThat(user999.getId()).isNotNull();
     }
 
+    // Test for updating a user
     @Test
     public void testUpdateUser() {
         AppUser user1 = repository.findByUsername("user1");

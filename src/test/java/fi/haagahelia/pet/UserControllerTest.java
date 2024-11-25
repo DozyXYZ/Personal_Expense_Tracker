@@ -16,16 +16,19 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    // Test for accessing the login page. Status 200 is expected.
     @Test
     public void testLogin() throws Exception {
         mockMvc.perform(get("/login")).andExpect(status().isOk());
     }
 
+    // Test for accessing the registration page. Status 200 is expected.
     @Test
     public void testShowResgistrationForm() throws Exception {
         mockMvc.perform(get("/register")).andExpect(status().isOk());
     }
 
+    // Test for accessing the reset password page. Status 200 is expected.
     @Test
     public void testShowResetPasswordForm() throws Exception {
         mockMvc.perform(get("/reset")).andExpect(status().isOk());

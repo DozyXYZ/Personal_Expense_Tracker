@@ -31,6 +31,7 @@ public class ExpenseRepositoryTest {
     @Autowired
     private TypeExpenseRepository typeRepository;
 
+    // Test for finding an expense by date
     @Test
     public void findByDateShouldReturnExpenses() {
         LocalDate date = LocalDate.of(2023, 1, 1);
@@ -38,6 +39,7 @@ public class ExpenseRepositoryTest {
         assertThat(expenses).isNotEmpty();
     }
 
+    // Test for finding an expense by description
     @Test
     public void findByDescriptionShouldReturnExpenses() {
         String description = "Grocery Store";
@@ -45,6 +47,7 @@ public class ExpenseRepositoryTest {
         assertThat(expenses).isNotEmpty();
     }
 
+    // Test for finding an expense by amount
     @Test
     public void findByAmountShouldReturnExpenses() {
         double amount = 100.0;
@@ -52,6 +55,7 @@ public class ExpenseRepositoryTest {
         assertThat(expenses).isNotEmpty();
     }
 
+    // Test for creating expense by user
     @Test
     public void testCreateExpense() {
         TypeExpense housing = typeRepository.findByType("Housing");
@@ -61,6 +65,7 @@ public class ExpenseRepositoryTest {
         assertThat(expense.getId()).isNotNull();
     }
 
+    // Test for deleting a specific expense
     @Test
     public void testDeleteSpecificExpense() {
         List<Expense> expenses = repository.findByDescription("Grocery Store");
@@ -74,6 +79,7 @@ public class ExpenseRepositoryTest {
         assertThat(deletedExpenses).doesNotContain(expenseToDelete);
     }
 
+    // Test for updating a specific expense
     @Test
     public void testUpdateSpecificExpense() {
         Expense expense = repository.findByDescription("Rent").get(0);
