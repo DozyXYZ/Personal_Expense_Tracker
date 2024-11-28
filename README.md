@@ -50,7 +50,7 @@ The application is a personal expense tracker built with **Spring Boot** and **T
 2. Enter your username and password and submit the form.
 
 ## Reset Password
-1. After the first login, the application will generate a unique recovery code that the user can remember
+1. After registration, the application will generate a unique recovery code that the user can remember
 2. When the user want to change the password, go to http://localhost:8080/reset
 3. Fill in the required fields: username, recovery code, and new password and submit the form
 
